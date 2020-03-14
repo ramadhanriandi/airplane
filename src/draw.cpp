@@ -23,6 +23,18 @@ float red = 1.0f, blue = 1.0f, green = 1.0f;
 // angle for rotating triangle
 float angle = 0.0f;
 
+static bool shade = false;
+
+const GLfloat light_ambient[]  = { 0.0f, 5.0f, 7.0f, 10.0f };
+const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+
+const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat high_shininess[] = { 100.0f };
+
 void processSpecialKeys(int key, int xx, int yy)
 {
 
@@ -69,6 +81,8 @@ void processNormalKeys(unsigned char key, int x, int y)
         zRotated -= rotateValue;
         break;
     }
+	case ' ';
+		shade = !(shade);
 }
 
 void init(void)
@@ -101,6 +115,30 @@ void DrawCube(void)
         float secondVertex = planePositions[i - 1];
         float thirdVertex = planePositions[i];
         glVertex3f(firstVertex, secondVertex, thirdVertex);
+    }
+	if (shade){
+        printf("1");
+        glEnable(GL_LIGHT0);
+        glEnable(GL_NORMALIZE);
+        glEnable(GL_COLOR_MATERIAL);
+        glEnable(GL_LIGHTING);
+
+        glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+        glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+        glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+        glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+        glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+        glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+    }else{
+        printf("0");
+
+        glDisable(GL_LIGHT0);
+        glDisable(GL_NORMALIZE);
+        glDisable(GL_COLOR_MATERIAL);
+        glDisable(GL_LIGHTING);
     }
 
     glColor3f(0.0f, 1.0f, 0.0f); // Color Blue
