@@ -208,16 +208,46 @@ void DrawCube(void)
     // glutSolidCube(6);
     glBegin(GL_QUADS);
 
-    int numberOfVertex = sizeof(planePositions) / sizeof(*planePositions);
+    // int numberOfVertex = sizeof(planePositions) / sizeof(*planePositions);
 
-    for (int i = numberOfVertex - 1; i >= 0; i -= 3)
-    {
-        float firstVertex = planePositions[i - 2];
-        float secondVertex = planePositions[i - 1];
-        float thirdVertex = planePositions[i];
-        glVertex3f(firstVertex, secondVertex, thirdVertex);
-    }
+    // for (int i = numberOfVertex - 1; i >= 0; i -= 3)
+    // {
+    //     float firstVertex = planePositions[i - 2];
+    //     float secondVertex = planePositions[i - 1];
+    //     float thirdVertex = planePositions[i];
+    //     glVertex3f(firstVertex, secondVertex, thirdVertex);
+    // }
 
+
+    // glVertex3f(-0.546343, -0.761196, -1.98973);
+    // glVertex3f(0.489108, -0.761196, -1.98973);
+    // glVertex3f(0.489242, 0.666667, -1.98962);
+    // glVertex3f(-0.546209, 0.666667, -1.98962);
+
+    // glVertex3f(-0.546343, -0.760023, -3.3028);
+    // glVertex3f(0.489108, -0.761196, -3.3028);
+    // glVertex3f(0.489242, 0.666667, -3.3027);
+    // glVertex3f(-0.546209, 0.666667, -3.3027);
+
+    // glVertex3f(-0.546209, 0.666667, -1.98962);
+    // glVertex3f(-0.546343, -0.761196, -1.98973);
+    // glVertex3f(-0.546343, -0.760023, -3.3028);
+    // glVertex3f(-0.546209, 0.666667, -3.3027);
+
+    // glVertex3f(0.489108, -0.761196, -1.98973);
+    // glVertex3f(0.489242, 0.666667, -1.98962);
+    // glVertex3f(0.489242, 0.666667, -3.3027);
+    // glVertex3f(0.489108, -0.761196, -3.3028);
+
+    // glVertex3f(-0.546343, -0.761196, -1.98973);
+    // glVertex3f(0.489108, -0.761196, -1.98973);
+    // glVertex3f(0.489108, -0.761196, -3.3028);
+    // glVertex3f(-0.546343, -0.760023, -3.3028);
+
+    // glVertex3f(-0.546209, 0.666667, -1.98962);
+    // glVertex3f(0.489242, 0.666667, -1.98962);
+    // glVertex3f(0.489242, 0.666667, -3.3027);
+    // glVertex3f(-0.546209, -0.524696, -3.3027);
 
     // glColor3f(0.0f, 1.0f, 0.0f); // Color Blue
     // glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Top)
@@ -229,7 +259,7 @@ void DrawCube(void)
     // glVertex3f(-1.0f,-1.0f, 1.0f);    // Top Left Of The Quad (Bottom)
     // glVertex3f(-1.0f,-1.0f,-1.0f);    // Bottom Left Of The Quad (Bottom)
     // glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Bottom)
-    glColor3f(1.0f, 0.0f, 0.0f); // Color Red
+    // glColor3f(1.0f, 0.0f, 0.0f); // Color Red
     // glVertex3f( 1.0f, 1.0f, 1.0f);    // Top Right Of The Quad (Front)
     // glVertex3f(-1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Front)
     // glVertex3f(-1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Front)
