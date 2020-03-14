@@ -36,7 +36,7 @@ file_output = open("plane.c", "w")
 file_output.writelines('#include "plane.h"\n')
 file_output.writelines('extern const float planePositions[576] = \n')
 file_output.writelines('{')
-with open("input.txt") as f:
+with open("vertex.txt") as f:
     for line in f:
         line = line.rstrip()
         if line == "//":
