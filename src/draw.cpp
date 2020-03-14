@@ -6,6 +6,7 @@
 #include <cstring>
 #include <math.h>
 #include "plane.c"
+#include "color.c"
 
 using namespace std;
 
@@ -210,12 +211,27 @@ void DrawCube(void)
 
     int numberOfVertex = sizeof(planePositions) / sizeof(*planePositions);
 
+    int counterColorUsed = 0;
+    int indexColorUsed = 0;
     for (int i = numberOfVertex - 1; i >= 0; i -= 3)
     {
         float firstVertex = planePositions[i - 2];
         float secondVertex = planePositions[i - 1];
         float thirdVertex = planePositions[i];
         glVertex3f(firstVertex, secondVertex, thirdVertex);
+        if ((numberOfVertex - i - 1) % 12 == 0) {
+            counterColorUsed++;
+
+            float red = colorShapes[3*indexColorUsed];
+            float green = colorShapes[3*indexColorUsed+1];
+            float blue = colorShapes[3*indexColorUsed+2];
+            glColor3f(red, green, blue);
+
+            if (counterColorUsed == 6) {
+                counterColorUsed = 0;
+                indexColorUsed ++;
+            }
+        }
     }
 
     glPopMatrix();
