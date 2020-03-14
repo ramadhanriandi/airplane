@@ -6,8 +6,12 @@
 // Faces: 6
 // Vertices: 18
 
-const int cubeVertices;
-const float cubePositions[54];
-const float cubeTexels[36];
-const float cubeNormals[54];
+#define N_POSITION 54
+#define N_TEXEL 36
+#define N_NORMAL 54
+
+extern const int cubeVertices;
+extern const float cubePositions[N_POSITION];
+extern const float cubeTexels[N_TEXEL];
+extern const float cubeNormals[N_NORMAL];
 

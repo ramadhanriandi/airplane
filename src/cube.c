@@ -2,9 +2,9 @@
 
 #include "cube.h"
 
-const int cubeVertices = 18;
+extern const int cubeVertices = 18;
 
-const float cubePositions[54] = 
+extern const float cubePositions[N_POSITION] = 
 {
 1, 1, -1, 
 -1, 1, -1, 
@@ -26,7 +26,7 @@ const float cubePositions[54] =
 1, 1, -1, 
 };
 
-const float cubeTexels[36] = 
+extern const float cubeTexels[N_TEXEL] = 
 {
 0.625, 0.5, 
 0.875, 0.5, 
@@ -48,7 +48,7 @@ const float cubeTexels[36] =
 0.625, 0.5, 
 };
 
-const float cubeNormals[54] = 
+extern const float cubeNormals[N_NORMAL] = 
 {
 0, 1, 0, 
 0, 1, 0, 
