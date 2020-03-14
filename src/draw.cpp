@@ -17,7 +17,7 @@ float phi = 0.0f;
 float theta = 0.0f;
 float temp_x,temp_y,temp_z;
 // XZ position of the camera
-float x = 0.0f, y = 0.0, z = 5.0f;
+float x = 0.0f, y = 0.0, z = 20.0f;
 float upX = 0.0f, upY = 1.0f, upZ = 0.0f;
 
 float rotateValue = 3;
@@ -49,7 +49,7 @@ void reset_display()
     zRotated = 0;
     x = 0.0f;
     y = 0.0;
-    z = 5.0f;
+    z = 20.0f;
     phi = 0.0f;
     theta = 0.0f;
     upX = 0.0f;
@@ -92,7 +92,6 @@ void processSpecialKeys(int key, int xx, int yy)
         lx = -sin(theta) * cos(phi);
         ly = -sin(theta) * sin(phi);
         lz = -cos(theta);
-
         break;
     case GLUT_KEY_LEFT:
         theta -= 0.1;
@@ -148,14 +147,24 @@ void processNormalKeys(unsigned char key, int x, int y)
     case '1':
         // putar kiri
         phi += 0.1;
+        //lz = -cos(theta);
+
+        // lx = -sin(theta) * cos(phi);
+        // ly = -sin(theta) * sin(phi);
+        // lz = -cos(theta);
         upX = sin(phi);
         upY = cos(phi);
+        upZ = sin(phi);
+
+
         break;
     case '2':
         //putar kanan
         phi -= 0.1;
         upX = sin(phi);
         upY = cos(phi);
+        upZ = sin(phi);
+
         break;
     }
 }
