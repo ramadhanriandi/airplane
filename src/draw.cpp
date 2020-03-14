@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdint>
 #include <cstring>
-#include "cube.h"
+#include "cube.c"
 
 using namespace std;
 
@@ -25,12 +25,14 @@ void DrawCube(void) {
 
     glBegin(GL_QUADS);
 
-    // for (int i = 0; i < N_VERTEX; i+=3) {
-    //     float firstVertex = cubePositions[i];
-    //     float secondVertex = cubePositions[i + 1];
-    //     float thirdVertex = cubePositions[i + 2];
-    //     glVertex3f(firstVertex, secondVertex, thirdVertex);
-    // }
+    int numberOfVertex = sizeof(cubePositions)/sizeof(*cubePositions);
+
+    for (int i = numberOfVertex - 1; i >= 0; i-=3) {
+        float firstVertex = cubePositions[i-2];
+        float secondVertex = cubePositions[i - 1];
+        float thirdVertex = cubePositions[i];
+        glVertex3f(firstVertex, secondVertex, thirdVertex);
+    }
 
     // // glColor3f(0.0f,1.0f,0.0f);    // Color Blue
     // glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Top)
