@@ -12,6 +12,9 @@ using namespace std;
 GLfloat xRotated = 0, yRotated = 0, zRotated = 0;
 
 float lx = 0.0f, ly =0.0f ,lz = -1.0f;
+
+float phi = 0.0f;
+float theta = 0.0f;
 // XZ position of the camera
 float x = 0.0f, y =0.0,z = 5.0f;
 
@@ -49,6 +52,20 @@ void processSpecialKeys(int key, int xx, int yy)
     case GLUT_KEY_DOWN:
         x -= lx * fraction;
         z -= lz * fraction;
+        break;
+    case GLUT_KEY_RIGHT:
+        theta += 0.1;
+        // phi += 0.5;
+        x = sqrt(x*x + z*z + y*y)* cos(phi)*sin(theta);
+        z = sqrt(x*x + z*z + y*y)*cos(theta);
+        lx = -1 * tan(theta);
+        break; 
+    case GLUT_KEY_LEFT:
+        theta -= 0.1;
+        // phi -= 0.5;
+        x = sqrt(x*x + z*z + y*y)* cos(phi)*sin(theta);
+        z = sqrt(x*x + z*z + y*y)*cos(theta);
+        lx = -1* tan(theta);
         break;
     }
 }
@@ -90,6 +107,13 @@ void processNormalKeys(unsigned char key, int x, int y)
         x = 0.0f;
         y =0.0;
         z = 5.0f;
+    case '[':
+        // putar kiri
+
+        break;
+    case ']':
+        //putar kanan
+        break;
     }
 }
 
