@@ -15,11 +15,12 @@ float lx = 0.0f, ly = 0.0f, lz = -1.0f;
 
 float phi = 0.0f;
 float theta = 0.0f;
+float temp_x,temp_y,temp_z;
 // XZ position of the camera
 float x = 0.0f, y = 0.0, z = 5.0f;
 float upX = 0.0f, upY = 1.0f, upZ = 0.0f;
 
-float rotateValue = 1;
+float rotateValue = 3;
 // all variables initialized to 1.0, meaning
 // the triangle will initially be white
 float red = 1.0f, blue = 1.0f, green = 1.0f;
@@ -61,7 +62,7 @@ void processSpecialKeys(int key, int xx, int yy)
 
     float fraction = 0.5f;
     float epsilon = 0.1f;
-    printf("x : %d\ny : %d",x,z);
+    printf("x : %f z : %f theta : %f\n",x,z,theta);
     switch (key)
     {
     case GLUT_KEY_UP:
@@ -77,10 +78,14 @@ void processSpecialKeys(int key, int xx, int yy)
     case GLUT_KEY_RIGHT:
         theta += 0.1;
         // phi += 0.5;
-        x = sqrt(x * x + z * z + y * y) * sin(theta) * cos(phi);
-        y = sqrt(x * x + z * z + y * y) * sin(theta) * sin(phi);
-        z = sqrt(x * x + z * z + y * y) * cos(theta);
+        
+        temp_x = sqrt(x * x + z * z + y * y) * sin(theta) * cos(phi);
+        temp_y = sqrt(x * x + z * z + y * y) * sin(theta) * sin(phi);
+        temp_z = sqrt(x * x + z * z + y * y) * cos(theta);
 
+        x = temp_x;
+        y = temp_y;
+        z = temp_z;
         lx = -sin(theta) * cos(phi);
         ly = -sin(theta) * sin(phi);
         lz = -cos(theta);
@@ -89,9 +94,14 @@ void processSpecialKeys(int key, int xx, int yy)
     case GLUT_KEY_LEFT:
         theta -= 0.1;
         // phi -= 0.5;
-        x = sqrt(x * x + z * z + y * y) * sin(theta) * cos(phi);
-        y = sqrt(x * x + z * z + y * y) * sin(theta) * sin(phi);
-        z = sqrt(x * x + z * z + y * y) * cos(theta);
+        temp_x = sqrt(x * x + z * z + y * y) * sin(theta) * cos(phi);
+        temp_y = sqrt(x * x + z * z + y * y) * sin(theta) * sin(phi);
+        temp_z = sqrt(x * x + z * z + y * y) * cos(theta);
+
+        x = temp_x;
+        y = temp_y;
+        z = temp_z;
+
         lx = -sin(theta) * cos(phi);
         ly = -sin(theta) * sin(phi);
         lz = -cos(theta);
@@ -130,8 +140,8 @@ void processNormalKeys(unsigned char key, int x, int y)
         shade = !(shade);
         break;
     case '0':
-        reset_display();
-
+        reset_display();   
+        break;
     case '1':
         // putar kiri
         phi += 0.1;
