@@ -11,12 +11,13 @@ using namespace std;
 
 GLfloat xRotated = 0, yRotated = 0, zRotated = 0;
 
-float lx = 0.0f, ly =0.0f ,lz = -1.0f;
+float lx = 0.0f, ly = 0.0f, lz = -1.0f;
 
 float phi = 0.0f;
 float theta = 0.0f;
 // XZ position of the camera
-float x = 0.0f, y =0.0,z = 5.0f;
+float x = 0.0f, y = 0.0, z = 5.0f;
+float upX = 0.0f, upY = 1.0f, upZ = 0.0f;
 
 float rotateValue = 1;
 // all variables initialized to 1.0, meaning
@@ -24,48 +25,76 @@ float rotateValue = 1;
 float red = 1.0f, blue = 1.0f, green = 1.0f;
 
 // angle for rotating triangle
-float angle = 0.0f;
 
 static bool shade = false;
 
-const GLfloat light_ambient[]  = { 0.0f, 5.0f, 7.0f, 10.0f };
-const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
-const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+const GLfloat light_ambient[] = {0.0f, 5.0f, 7.0f, 10.0f};
+const GLfloat light_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+const GLfloat light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+const GLfloat light_position[] = {2.0f, 5.0f, 5.0f, 0.0f};
 
-const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
-const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
-const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
-const GLfloat high_shininess[] = { 100.0f };
+const GLfloat mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+const GLfloat mat_diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f};
+const GLfloat mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+const GLfloat high_shininess[] = {100.0f};
+
+void reset_display()
+{
+    xRotated = 0;
+    yRotated = 0;
+    zRotated = 0;
+    x = 0.0f;
+    y = 0.0;
+    z = 5.0f;
+    phi = 0.0f;
+    theta = 0.0f;
+    upX = 0.0f;
+    upY = 1.0f;
+    upZ = 0.0f;
+    lx = 0.0f;
+    ly = 0.0f;
+    lz = -1.0f;
+}
 
 void processSpecialKeys(int key, int xx, int yy)
 {
 
-    float fraction = 0.1f;
-
+    float fraction = 0.5f;
+    float epsilon = 0.1f;
+    printf("x : %d\ny : %d",x,z);
     switch (key)
     {
     case GLUT_KEY_UP:
         x += lx * fraction;
+        y += ly * fraction;
         z += lz * fraction;
         break;
     case GLUT_KEY_DOWN:
         x -= lx * fraction;
+        y -= ly * fraction;
         z -= lz * fraction;
         break;
     case GLUT_KEY_RIGHT:
         theta += 0.1;
         // phi += 0.5;
-        x = sqrt(x*x + z*z + y*y)* cos(phi)*sin(theta);
-        z = sqrt(x*x + z*z + y*y)*cos(theta);
-        lx = -1 * tan(theta);
-        break; 
+        x = sqrt(x * x + z * z + y * y) * sin(theta) * cos(phi);
+        y = sqrt(x * x + z * z + y * y) * sin(theta) * sin(phi);
+        z = sqrt(x * x + z * z + y * y) * cos(theta);
+
+        lx = -sin(theta) * cos(phi);
+        ly = -sin(theta) * sin(phi);
+        lz = -cos(theta);
+
+        break;
     case GLUT_KEY_LEFT:
         theta -= 0.1;
         // phi -= 0.5;
-        x = sqrt(x*x + z*z + y*y)* cos(phi)*sin(theta);
-        z = sqrt(x*x + z*z + y*y)*cos(theta);
-        lx = -1* tan(theta);
+        x = sqrt(x * x + z * z + y * y) * sin(theta) * cos(phi);
+        y = sqrt(x * x + z * z + y * y) * sin(theta) * sin(phi);
+        z = sqrt(x * x + z * z + y * y) * cos(theta);
+        lx = -sin(theta) * cos(phi);
+        ly = -sin(theta) * sin(phi);
+        lz = -cos(theta);
         break;
     }
 }
@@ -77,7 +106,7 @@ void processNormalKeys(unsigned char key, int x, int y)
 
     switch (key)
     {
-            case 27:
+    case 27:
         exit(0);
     case 'u':
         xRotated += rotateValue;
@@ -97,22 +126,23 @@ void processNormalKeys(unsigned char key, int x, int y)
     case 'l':
         zRotated -= rotateValue;
         break;
-	case ' ':
-		shade = !(shade);
+    case ' ':
+        shade = !(shade);
         break;
     case '0':
-        xRotated = 0;
-        yRotated = 0;
-        zRotated = 0;
-        x = 0.0f;
-        y =0.0;
-        z = 5.0f;
-    case '[':
-        // putar kiri
+        reset_display();
 
+    case '1':
+        // putar kiri
+        phi += 0.1;
+        upX = sin(phi);
+        upY = cos(phi);
         break;
-    case ']':
+    case '2':
         //putar kanan
+        phi -= 0.1;
+        upX = sin(phi);
+        upY = cos(phi);
         break;
     }
 }
@@ -129,14 +159,14 @@ void DrawCube(void)
     glLoadIdentity();
     glPushMatrix();
     gluLookAt(x, y, z,
-              x + lx, y+ly, z + lz,
-              0.0f, 1.0f, 0.0f);
+              x + lx, y + ly, z + lz,
+              upX, upY, upZ);
 
     glRotated(xRotated, 1.0, 0.0, 0.0);
     glRotated(yRotated, 0.0, 1.0, 0.0);
     glRotated(zRotated, 0.0, 0.0, 1.0);
     // glTranslatef(0.0, 0.0, -10.5);
-
+    // glutSolidCube(6);
     glBegin(GL_QUADS);
 
     int numberOfVertex = sizeof(planePositions) / sizeof(*planePositions);
@@ -148,23 +178,26 @@ void DrawCube(void)
     //     float thirdVertex = planePositions[i];
     //     glVertex3f(firstVertex, secondVertex, thirdVertex);
     // }
-	if (shade){
+    if (shade)
+    {
         // printf("1");
         glEnable(GL_LIGHT0);
         glEnable(GL_NORMALIZE);
         glEnable(GL_COLOR_MATERIAL);
         glEnable(GL_LIGHTING);
 
-        glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
-        glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+        glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
         glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
         glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-        glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
-        glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
-        glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
         glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-    }else{
+    }
+    else
+    {
         // printf("0");
 
         glDisable(GL_LIGHT0);
