@@ -29,19 +29,24 @@ float red = 1.0f, blue = 1.0f, green = 1.0f;
 
 static bool shade = false;
 
-GLfloat ambientLight[] = {0.0f, 0.0f, 0.0f, 1.0f};
-GLfloat lightColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
+GLfloat lightAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+// GLfloat lightColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
 GLfloat lightPos[] ={10,10,-15,0};
 GLfloat lightDiffuse[] = {1.0f,1.0f,1.0f,1.0f};
+GLfloat lightSpecullar[] = {0.0f,0.0f,0.0f,0.0f};
+
 
   //The color of the sphere
-GLfloat materialColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
+//GLfloat materialColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
 //The specular (shiny) component of the material
-GLfloat materialSpecular[] = {0,0,1,1};
+GLfloat materialSpecular[] = {0,0,0,1};
 //The color emitted by the material
 GLfloat materialEmission[] = {1.0f,0.0f,0, 1.0f};
+GLfloat materialAmbient[] = {0.7f,0.7f,0.7f,1.0f};
+GLfloat materialDiffuse[] = {0.8f,0.8f,0.8f,1.0f};
 
-GLfloat shininess = 100;
+
+GLfloat shininess[] = {100};
 
 void reset_display()
 {
@@ -189,15 +194,16 @@ void DrawCube(void)
 		glEnable(GL_COLOR_MATERIAL);
 		//Diffuse (non-shiny) light component
 		//Specular (shiny) light component
-        glLightfv(GL_LIGHT0,GL_AMBIENT,ambientLight);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, lightColor);
+        glLightfv(GL_LIGHT0,GL_AMBIENT, lightAmbient);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecullar);
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
         glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
 
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, materialSpecular);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, materialEmission);
-		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess); //The shininess parameter
+		glMaterialfv(GL_FRONT, GL_AMBIENT, materialAmbient);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
+		// glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, materialEmission);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
+		glMaterialf(GL_FRONT, GL_SHININESS, shininess[0]); //The shininess parameter
 	}else{
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHTING);
@@ -212,15 +218,55 @@ void DrawCube(void)
 
     int numberOfVertex = sizeof(planePositions) / sizeof(*planePositions);
 
-    for (int i = numberOfVertex - 1; i >= 0; i -= 3)
-    {
-        float firstVertex = planePositions[i - 2];
-        float secondVertex = planePositions[i - 1];
-        float thirdVertex = planePositions[i];
-        glVertex3f(firstVertex, secondVertex, thirdVertex);
-    }
+    // for (int i = numberOfVertex - 1; i >= 0; i -= 3)
+    // {
+    //     float firstVertex = planePositions[i - 2];
+    //     float secondVertex = planePositions[i - 1];
+    //     float thirdVertex = planePositions[i];
+    //     glVertex3f(firstVertex, secondVertex, thirdVertex);
+    // }
+
+    
+    glVertex3d(-0.303567f,-1.00389f,-2.23275f); //a
+    glVertex3d(0.246057f,-1.00411f,-2.23275f); // b
+    glVertex3d(0.246057f,-1.00383f,-3.06f); // c 
+    glVertex3d(-0.303567f,-1.00343f,-3.06f); // d
+
+    glVertex3d(-0.303567f,-1.00389f,-2.23275f); // a
+    glVertex3d(0.246057f,-1.00411f,-2.23275f); // b
+    glVertex3d(0.489108f,-0.761196f,-1.98973); // f
+    glVertex3d(-0.546343f,-0.761196f,-1.98973f); // e
+
+    glVertex3d(0.246057f,-1.00383f,-3.06f); // c
+    glVertex3d(-0.303567f,-1.00343f,-3.06f); // d
+    glVertex3d(-0.546343f,-0.760023f,-3.3028f); // h
+    glVertex3d(0.489108f,-0.761196f,-3.3028f); // g
+
+    glVertex3d(-0.303567f,-1.00389f,-2.23275f); //a
+    glVertex3d(-0.303567f,-1.00343f,-3.06f); // d
+    glVertex3d(-0.546343f,-0.760023f,-3.3028f); // h
+    glVertex3d(-0.546343f,-0.761196f,-1.98973f); // e
+
+    glVertex3d(0.246057f,-1.00411f,-2.23275f); // b
+    glVertex3d(0.246057f,-1.00383f,-3.06f); // c 
+    glVertex3d(0.489108f,-0.761196f,-3.3028f); // g
+    glVertex3d(0.489108f,-0.761196f,-1.98973); // f
+
+    glVertex3d(-0.546343f,-0.761196f,-1.98973f); // e
+    glVertex3d(0.489108f,-0.761196f,-1.98973); // f
+    glVertex3d(0.489108f,-0.761196f,-3.3028f); // g
+    glVertex3d(-0.546343f,-0.760023f,-3.3028f); // h
 
 
+
+
+
+
+
+
+
+
+    // glutSolidSphere(1,16,16);
     // glColor3f(0.0f, 1.0f, 0.0f); // Color Blue
     // glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Top)
     // glVertex3f(-1.0f, 1.0f,-1.0f);    // Top Left Of The Quad (Top)
