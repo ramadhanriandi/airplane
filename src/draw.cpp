@@ -29,18 +29,19 @@ float red = 1.0f, blue = 1.0f, green = 1.0f;
 
 static bool shade = false;
 
-GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
-GLfloat lightColor[] = {0.6f, 0.6f, 0.6f, 1.0f};
-GLfloat lightPos[] ={10,0,-15,1};
+GLfloat ambientLight[] = {0.0f, 0.0f, 0.0f, 1.0f};
+GLfloat lightColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
+GLfloat lightPos[] ={10,10,-15,0};
+GLfloat lightDiffuse[] = {1.0f,1.0f,1.0f,1.0f};
 
   //The color of the sphere
-GLfloat materialColor[] = {1.0f, 1.0f, 0.0f, 1.0f};
+GLfloat materialColor[] = {1.0f, 0.0f, 0.0f, 1.0f};
 //The specular (shiny) component of the material
 GLfloat materialSpecular[] = {0,0,1,1};
 //The color emitted by the material
-GLfloat materialEmission[] = {1.0f,1.0f,0, 1.0f};
+GLfloat materialEmission[] = {1.0f,0.0f,0, 1.0f};
 
-GLfloat shininess = 20;
+GLfloat shininess = 100;
 
 void reset_display()
 {
@@ -185,12 +186,13 @@ void DrawCube(void)
 		glEnable(GL_LIGHT0);
 		glEnable(GL_NORMALIZE);
 		//Disable color materials, so that glMaterial calls work
-		glDisable(GL_COLOR_MATERIAL);
+		glEnable(GL_COLOR_MATERIAL);
 		//Diffuse (non-shiny) light component
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
 		//Specular (shiny) light component
+        glLightfv(GL_LIGHT0,GL_AMBIENT,ambientLight);
 		glLightfv(GL_LIGHT0, GL_SPECULAR, lightColor);
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
 
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, materialColor);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, materialSpecular);
@@ -202,7 +204,7 @@ void DrawCube(void)
 		glDisable(GL_LIGHT0);
 		GLdouble(GL_NORMALIZE);
 		//Disable color materials, so that glMaterial calls work
-		glEnable(GL_COLOR_MATERIAL);
+		glDisable(GL_COLOR_MATERIAL);
 	}
     // glTranslatef(0.0, 0.0, -10.5);
     // glutSolidCube(6);
@@ -229,7 +231,7 @@ void DrawCube(void)
     // glVertex3f(-1.0f,-1.0f, 1.0f);    // Top Left Of The Quad (Bottom)
     // glVertex3f(-1.0f,-1.0f,-1.0f);    // Bottom Left Of The Quad (Bottom)
     // glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Bottom)
-    glColor3f(1.0f, 0.0f, 0.0f); // Color Red
+    glColor3f(0.5f, 0.2f, 0.1f); // Color Red
     // glVertex3f( 1.0f, 1.0f, 1.0f);    // Top Right Of The Quad (Front)
     // glVertex3f(-1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Front)
     // glVertex3f(-1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Front)
