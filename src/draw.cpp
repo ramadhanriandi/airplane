@@ -18,7 +18,7 @@ float phi = 0.0f;
 float theta = 0.0f;
 float temp_x,temp_y,temp_z;
 // XZ position of the camera
-float x = 0.0f, y = 0.0, z = 20.0f;
+float x = 0.0f, y = 0.0, z = 40.0f;
 float upX = 0.0f, upY = 1.0f, upZ = 0.0f;
 
 float rotateValue = 3;
@@ -50,7 +50,7 @@ void reset_display()
     zRotated = 0;
     x = 0.0f;
     y = 0.0;
-    z = 20.0f;
+    z = 40.0f;
     phi = 0.0f;
     theta = 0.0f;
     upX = 0.0f;
@@ -59,6 +59,7 @@ void reset_display()
     lx = 0.0f;
     ly = 0.0f;
     lz = -1.0f;
+    shade = false;
 }
 
 void processSpecialKeys(int key, int xx, int yy)
@@ -66,7 +67,7 @@ void processSpecialKeys(int key, int xx, int yy)
 
     float fraction = 0.5f;
     float epsilon = 0.1f;
-    printf("x : %f z : %f theta : %f\n",x,z,theta);
+    // printf("x : %f z : %f theta : %f\n",x,z,theta);
     switch (key)
     {
     case GLUT_KEY_UP:
@@ -249,24 +250,6 @@ void DrawCube(void)
     glFlush();
 }
 
-// void animation(void)
-// {
-//     yRotated += 0.01;
-//     xRotated += 0.02;
-//     DrawCube();
-// }
-
-// void reshape(int x, int y)
-// {
-//     if (y == 0 || x == 0)
-//         return;
-//     glMatrixMode(GL_PROJECTION);
-//     glLoadIdentity();
-//     gluPerspective(40.0, (GLdouble)x / (GLdouble)y, 0.5, 20.0);
-//     glMatrixMode(GL_MODELVIEW);
-//     glViewport(0, 0, x, y);
-// }
-
 void changeSize(int w, int h)
 {
 
@@ -292,12 +275,27 @@ void changeSize(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
+void menuHelp(){
+    cout<<"LIST OF COMMANDS : "<<endl;
+    cout<<"KEY_LEFT / KEY_RIGHT : Menggerakkan kamera mengitari model"<<endl;
+    cout<<"KEY_UP / KEY_DOWN : Mengubah jarak kamera"<<endl;
+    cout<<"U/J : Rotasi objek pada sumbu x"<<endl;
+    cout<<"I/K : Rotasi objek pada sumbu y"<<endl;
+    cout<<"O/L : Rotasi objek pada sumbu z"<<endl;
+    cout<<"1/2 : Rotasi kamera terhadap vektor up"<<endl;
+    cout<<"0 : reset view"<<endl;
+    cout<<"space : on/off shading"<<endl;
+    cout<<"esc : exit window"<<endl;
+
+}
+
 int main(int argc, char **argv)
 {
+    menuHelp();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(320, 320);
+    glutInitWindowSize(720, 720);
     glutCreateWindow(argv[0]);
 
     glutDisplayFunc(DrawCube);
@@ -312,3 +310,5 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
+
